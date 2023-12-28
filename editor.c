@@ -17,6 +17,7 @@
 /*** defines ***/
 
 #define CTRL_KEY(k) ((k) & 0x1f)
+#define EDITOR_TAB_STOP 8
 #define EDITOR_VERSION "0.0.1"
 
 enum arrowsKeys {
@@ -35,7 +36,9 @@ enum arrowsKeys {
 
 typedef struct erow {
     int size;
+    int rendersize;
     char *chars;
+    char *render;
 } erow;
 
 struct config {
@@ -183,6 +186,30 @@ short getWindowSize(int *rows, int *cols)
 
 /*** row operations ***/
 
+void updateRow(erow *row)
+{
+    int tabs = 0;
+    int j;
+    for (j = 0; j < row->size; ++j) {
+        if (row->chars[j] == '\t') ++tabs;
+    }
+
+    free(row->render);
+    row->render = malloc(row->size + tabs * (EDITOR_TAB_STOP - 1) + 1);
+
+    int idx = 0;
+    for (j = 0; j < row->size; ++j) {
+        if (row->chars[j] == '\t')  {
+            row->render[idx++] = ' ';
+            while (idx % EDITOR_TAB_STOP != 0) row->render[idx++] = ' ';
+        } else {
+            row->render[idx++] = row->chars[j];
+        }
+    }
+    row->render[idx] = '\0';
+    row->rendersize = idx;
+}
+
 void appendRow(const char *s, const size_t len) 
 {
     E.row = realloc(E.row, sizeof(erow) * (E.rowsnum + 1));
@@ -192,6 +219,11 @@ void appendRow(const char *s, const size_t len)
     E.row[at].chars = malloc(len + 1);
     memcpy(E.row[at].chars, s, len);
     E.row[at].chars[len] = '\0';
+
+    E.row[at].rendersize = 0;
+    E.row[at].render = NULL;
+    updateRow(&E.row[at]);
+
     E.rowsnum++;
 }
 
@@ -290,10 +322,10 @@ void drawRows(struct abuf *ab)
                 abufAppend(ab, "~", 1);
             }
         } else {
-            int len = E.row[filerow].size - E.coloff;
+            int len = E.row[filerow].rendersize - E.coloff;
             if (len < 0) len = 0;
             if (len > E.screencols) len = E.screencols;
-            abufAppend(ab, &E.row[filerow].chars[E.coloff], len);
+            abufAppend(ab, &E.row[filerow].render[E.coloff], len);
         }
 
     abufAppend(ab, "\x1b[K", 3);
@@ -328,29 +360,45 @@ void refreshScreen(void)
 
 void moveCursor(const int key)
 {
+    erow *row = (E.cy >= E.rowsnum) ? NULL : &E.row[E.cy]; 
+
     switch (key)    {
         case ARROW_LEFT:
             if (E.cx != 0)  {
-                --E.cx;
+                E.cx--;
+            } else if (E.cy > 0)    {
+                E.cy--;
+                E.cx = E.row[E.cy].size;
             }
             break;
 
         case ARROW_DOWN:
             if (E.cy < E.rowsnum)   {
-                ++E.cy;
+                E.cy++;
             }
             break;
 
         case ARROW_RIGHT:
-            ++E.cx;
+            if (row && E.cx < row->size)    {
+                E.cx++;
+            } else if (row && E.cx == row->size)    {
+                E.cy++;
+                E.cx = 0;
+            }
             break;
 
         case ARROW_UP:
             if (E.cy != 0)  {
-                --E.cy;
+                E.cy--;
             }
             break;
     }
+
+    row = (E.cy >= E.rowsnum) ? NULL : &E.row[E.cy];
+    const int rowlen = row ? row->size : 0;
+    if (E.cx > rowlen)  {
+        E.cx = rowlen;
+    } 
 }
 
 void processKeypress(void)
