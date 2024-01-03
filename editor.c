@@ -19,9 +19,11 @@
 
 /*** defines ***/
 
-#define CTRL_KEY(k) ((k) & 0x1f)
+#define EDITOR_QUIT_TIMES 1 
 #define EDITOR_TAB_STOP 8
 #define EDITOR_VERSION "0.0.1"
+
+#define CTRL_KEY(k) ((k) & 0x1f)
 
 enum arrowsKeys {
     BACKSPACE = 127,
@@ -66,6 +68,8 @@ struct config E;
 /*** prototypes ***/
 
 void setStatusMessage(const char *fmt, ...);
+void refreshScreen(void);
+char* prompt(char *prompt);
 
 /*** terminal ***/
 
@@ -230,27 +234,44 @@ void updateRow(erow *row)
             while (idx % EDITOR_TAB_STOP != 0) row->render[idx++] = ' ';
         } else {
             row->render[idx++] = row->chars[j];
-        }
     }
+        }
     row->render[idx] = '\0';
     row->rendersize = idx;
 }
 
-void appendRow(const char *s, const size_t len) 
+void insertRow(const int index, const char *s, const size_t len) 
 {
+    if (index < 0 || index > E.rowsnum) return;
+
     E.row = realloc(E.row, sizeof(erow) * (E.rowsnum + 1));
-    const int at = E.rowsnum;
+    memmove(&E.row[index + 1], &E.row[index], sizeof(erow) * (E.rowsnum - index));
 
-    E.row[at].size = len;
-    E.row[at].chars = malloc(len + 1);
-    memcpy(E.row[at].chars, s, len);
-    E.row[at].chars[len] = '\0';
+    E.row[index].size = len;
+    E.row[index].chars = malloc(len + 1);
+    memcpy(E.row[index].chars, s, len);
+    E.row[index].chars[len] = '\0';
 
-    E.row[at].rendersize = 0;
-    E.row[at].render = NULL;
-    updateRow(&E.row[at]);
+    E.row[index].rendersize = 0;
+    E.row[index].render = NULL;
+    updateRow(&E.row[index]);
 
     E.rowsnum++;
+    E.dirty++;
+}
+
+void freeRow(erow *row)
+{
+    free(row->render);
+    free(row->chars);
+}
+
+void deleteRow(const int index)
+{
+    if (index < 0 || index >= E.rowsnum)  return;
+    freeRow(&E.row[index]);
+    memmove(&E.row[index], &E.row[index + 1], sizeof(erow) * (E.rowsnum - index - 1));
+    E.rowsnum--;
     E.dirty++;
 }
 
@@ -265,16 +286,68 @@ void insertCharInRow(erow *row, int index, const int character)
     E.dirty++;
 }
 
+void appendStringInRow(erow *row, const char *str, const size_t len)
+{
+    row->chars = realloc(row->chars, row->size + len + 1);
+    memcpy(&row->chars[row->size], str, len);
+    row->size += len;
+    row->chars[row->size] = '\0';
+    updateRow(row);
+    E.dirty++;
+}
+
+void deleteCharFromRow(erow *row, const int index)
+{
+    if (index < 0 || index >= row->size) return;
+    memmove(&row->chars[index], &row->chars[index + 1], row->size - index);
+    row->size--;
+    updateRow(row);
+    E.dirty++;
+}
+
 /*** editor operations ***/
 
 void insertChar(const int character)
 {
     if (E.cy == E.rowsnum)   {
-        appendRow("", 0);
+        insertRow( E.rowsnum, "", 0);
     }
 
     insertCharInRow(&E.row[E.cy], E.cx, character);
     E.cx++;
+}
+
+void insertNewLine() // "Enter" keypress
+{
+    if (E.cx == 0)  {
+        insertRow(E.cy, "", 0);
+    } else {
+        erow *row = &E.row[E.cy];
+        insertRow(E.cy + 1, &row->chars[E.cx], row->size - E.cx);
+        row = &E.row[E.cy];
+        row->size = E.cx;
+        row->chars[row->size] = '\0';
+        updateRow(row);
+    }
+
+    E.cy++;
+    E.cx = 0;
+}
+
+void deleteChar()
+{   
+    if (E.cy == E.rowsnum || (E.cx == 0 && E.cy == 0)) return;
+
+    erow *row = &E.row[E.cy];
+    if (E.cx > 0)   {
+        deleteCharFromRow(row, E.cx - 1);
+        E.cx--;
+    } else {
+        E.cx = E.row[E.cy - 1].size;
+        appendStringInRow(&E.row[E.cy - 1], row->chars, row->size);
+        deleteRow(E.cy);
+        E.cy--;
+    }
 }
 
 /*** file io ***/
@@ -315,7 +388,7 @@ void openFile(const char *filename)
         while ((linelen > 0 && (line[linelen - 1] == '\n')) || (line[linelen - 1] == '\r')) {
             linelen--;
         }
-        appendRow(line, linelen);
+        insertRow(E.rowsnum, line, linelen);
     }
 
     free(line);
@@ -325,7 +398,13 @@ void openFile(const char *filename)
 
 void saveFile()
 {
-    if (E.filename == NULL) return;
+    if (E.filename == NULL) {
+        E.filename = prompt("Save as: %s (ESC to cancel)");
+        if (E.filename == NULL) {
+            setStatusMessage("Save aborted!");
+            return;
+        }
+    }
 
     int len;
     char *buf = convertRowsToSingleString(&len);
@@ -509,6 +588,41 @@ void setStatusMessage(const char *fmt, ...)
 
 /*** input ***/
 
+char* prompt(char *prompt)
+{
+    size_t bufcapacity = 128;
+    char *buf = malloc(bufcapacity);
+
+    size_t bufsize = 0;
+    buf[0] = '\0';
+
+    while (1)   {
+        setStatusMessage(prompt, buf);
+        refreshScreen();
+
+        const int c = readKey();
+        if (c == DELETE_KEY || c == CTRL_KEY('h') || c == BACKSPACE)    {
+            if (bufsize) buf[--bufsize] = '\0';
+        } else if (c == '\x1b')    {
+            setStatusMessage("");
+            free(buf);
+            return NULL;
+        } else if (c == '\r')  {
+            if (bufsize)   {
+                setStatusMessage("");
+                return buf;
+            }
+        } else if (!iscntrl(c) && c < 128)  {
+            if (bufsize == bufcapacity - 1) {
+                bufcapacity *= 2;
+                buf = realloc(buf, bufcapacity);
+            }
+            buf[bufsize++] = c;
+            buf[bufsize] = '\0'; 
+        }
+    }
+}
+
 void moveCursor(const int key)
 {
     erow *row = (E.cy >= E.rowsnum) ? NULL : &E.row[E.cy]; 
@@ -554,14 +668,20 @@ void moveCursor(const int key)
 
 void processKeypress(void)
 {
+    static int quit_times = EDITOR_QUIT_TIMES;
     const int c = readKey();
 
     switch (c)  {
         case '\r':
-            /*TODO:*/
+            insertNewLine();
             break;
 
         case CTRL_KEY('q'):
+            if (E.dirty && quit_times > 0)  {
+                setStatusMessage("WARNING! File has unsaved changes.\nPress CTRL-Q %d more time to quit.", quit_times);
+                quit_times--;
+                return;
+            }
             write(STDOUT_FILENO, "\x1b[2J", 4);
             write(STDOUT_FILENO, "\x1b[H", 3);
             exit(EXIT_SUCCESS);
@@ -584,7 +704,8 @@ void processKeypress(void)
         case BACKSPACE:
         case CTRL_KEY('h'):
         case DELETE_KEY:
-            /*TODO:*/
+            if (c == DELETE_KEY) moveCursor(ARROW_RIGHT);
+            deleteChar();
             break;
 
         case PAGE_UP:
@@ -614,6 +735,8 @@ void processKeypress(void)
             insertChar(c);
             break;
     }
+
+    quit_times = EDITOR_QUIT_TIMES;
 }
 
 /*** init ***/
