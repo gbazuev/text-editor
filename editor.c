@@ -4,8 +4,7 @@
 #define _BSD_SOURCE
 #define _GNU_SOURCE
 
-#include <ctype.h> /* This is a test of
-multiline comment */ 
+#include <ctype.h> 
 #include <stdio.h>
 #include <stdarg.h>
 #include <errno.h>
@@ -27,8 +26,19 @@ multiline comment */
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
-#define DIGIT_COLOR "\x1b[31m"
-#define COLORING_STOP_BYTE "\x1b[39m"
+/*
+#define HL_BACKGROUND "\x1b[48;5;238m" //TODO: improve
+#define HL_NORMAL "\x1b[38;5;221m;
+#define HL_COMMENT "\x1b[38;5;244m"
+#define HL_MLCOMMENT "\x1b[38;5;244m"
+#define HL_KEYWORD1 "\x1b[38;5;202m"
+#define HL_KEYWORD2 "\x1b[38;5;202m"
+#define HL_STRING "\x1b[38;5;54m"
+#define HL_NUMBER "\x1b[38;5;251m"
+#define HL_MATCH "\x1b[38;5;196m"
+*/
+#define COLORING_STOP_BYTE "\x1b[39m" //TODO: change name
+
 
 enum arrowsKeys {
     BACKSPACE = 127,
@@ -386,12 +396,12 @@ int mapSyntaxToColor(const int highlight)
 {
     switch (highlight)  {
         case HL_COMMENT:
-        case HL_MLCOMMENT: return 36;
-        case HL_KEYWORD1: return 33;
-        case HL_KEYWORD2: return 32;
-        case HL_NUMBER: return 31; //TODO: 8-bit colors!!!
-        case HL_MATCH: return 34;
-        case HL_STRING: return 35;
+        case HL_MLCOMMENT: return 244;
+        case HL_KEYWORD1: return 202;
+        case HL_KEYWORD2: return 202;
+        case HL_NUMBER: return 251; //TODO: 8-bit colors!!!
+        case HL_MATCH: return 196;
+        case HL_STRING: return 93;
         default: return 37;
     }
 }
@@ -838,12 +848,12 @@ void drawRows(struct abuf *ab)
             for (int j = 0; j < len; ++j)   {
                 if (iscntrl(c[j]))  {
                     const char symbol = (c[j] <= 26) ? '@' + c[j] : '?';
-                    abufAppend(ab, "\x1b[7m", 4);
+                    abufAppend(ab, "\x1b[7m", 4); //TODO: highlighting!!!
                     abufAppend(ab, &symbol, 1);
                     abufAppend(ab, "\x1b[m", 3);
                     if (current_color != -1) {
                         char buf[16];
-                        int clen = snprintf(buf, sizeof(buf), "\x1b[%dm", current_color);
+                        int clen = snprintf(buf, sizeof(buf), "\x1b[38;5;%dm", current_color);
                         abufAppend(ab, buf, clen);
                     }
                 } else if (highlight[j] == HL_NORMAL)  {
@@ -852,7 +862,7 @@ void drawRows(struct abuf *ab)
                 } else {
                     int color = mapSyntaxToColor(highlight[j]);
                     char buf[16];
-                    int clen = snprintf(buf, sizeof(buf), "\x1b[%dm", color); //COLOR length
+                    int clen = snprintf(buf, sizeof(buf), "\x1b[38;5;%dm", color); //COLOR length
                     abufAppend(ab, buf, clen);
                     abufAppend(ab, &c[j], 1);
                 }
