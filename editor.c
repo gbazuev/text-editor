@@ -26,8 +26,9 @@
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
-/*
+
 #define HL_BACKGROUND "\x1b[48;5;238m" //TODO: improve
+/*
 #define HL_NORMAL "\x1b[38;5;221m;
 #define HL_COMMENT "\x1b[38;5;244m"
 #define HL_MLCOMMENT "\x1b[38;5;244m"
@@ -37,7 +38,7 @@
 #define HL_NUMBER "\x1b[38;5;251m"
 #define HL_MATCH "\x1b[38;5;196m"
 */
-#define COLORING_STOP_BYTE "\x1b[39m" //TODO: change name
+#define HIGHLIGHT_RESET_BYTE "\x1b[39m" //TODO: change name
 
 
 enum arrowsKeys {
@@ -857,7 +858,7 @@ void drawRows(struct abuf *ab)
                         abufAppend(ab, buf, clen);
                     }
                 } else if (highlight[j] == HL_NORMAL)  {
-                    abufAppend(ab, COLORING_STOP_BYTE, 5);
+                    abufAppend(ab, HIGHLIGHT_RESET_BYTE, 5);
                     abufAppend(ab, &c[j], 1);
                 } else {
                     int color = mapSyntaxToColor(highlight[j]);
@@ -868,7 +869,7 @@ void drawRows(struct abuf *ab)
                 }
             }
 
-            abufAppend(ab, COLORING_STOP_BYTE, 5);
+            abufAppend(ab, HIGHLIGHT_RESET_BYTE, 5);
         }
 
     abufAppend(ab, "\x1b[K", 3);
