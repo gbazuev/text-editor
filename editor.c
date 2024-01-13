@@ -883,7 +883,7 @@ void drawRows(struct abuf *ab)
 
 void drawStatusBar(struct abuf *buf)    
 {
-    abufAppend(buf, "\x1b[7m", 4);
+    abufAppend(buf, "\x1b[48;5;238m", 11);
     char status[80], rstatus[80];
 
     int len = snprintf(status, sizeof(status), "%.20s - %d lines %s",
@@ -899,7 +899,7 @@ void drawStatusBar(struct abuf *buf)
             abufAppend(buf, rstatus, rlen);
             break;
         }
-
+        
         abufAppend(buf, " ", 1);
         len++;
     }
