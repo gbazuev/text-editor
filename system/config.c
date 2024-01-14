@@ -23,3 +23,9 @@ void init(void)
 
     E.screenrows -= 2;
 }
+
+int main(int argc, const char** const argv)
+{
+    init();
+    return 0;
+}

@@ -26,7 +26,6 @@
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
-
 #define HL_BACKGROUND "48;5;236m" //TODO: improve
 /*
 #define HL_NORMAL "\x1b[38;5;221m;

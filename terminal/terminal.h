@@ -1,5 +1,3 @@
-#pragma once
-
 #include <termios.h>
 #include <errno.h>
 #include <stdlib.h>

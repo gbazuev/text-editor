@@ -1,7 +1,10 @@
+#ifndef HLHELPERS_H
+#define HLHELPERS_H
+
 #define HL_HIGHLIGHT_NUMBERS (1 << 0)
 #define HL_HIGHLIGHT_STRINGS (1 << 1)
 
-#define HIGHLIGHT_RESET_BYTE "\x1b[39m"
+#define HL_RESET "\x1b[39m"
 
 #define HL_BACKGROUND "48;5;237m"
 
@@ -15,3 +18,5 @@ enum highlighting {
     HL_NUMBER,
     HL_MATCH
 };
+
+#endif /* HIGHLIGHT_H */

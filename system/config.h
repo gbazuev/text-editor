@@ -1,9 +1,10 @@
-#pragma once
+#ifndef CONFIG_H
+#define CONFIG_H
 
 #include <time.h>
 #include <termios.h>
 #include "erow.h"
-#include "Terminal/terminal.h"
+#include "terminal/terminal.h"
 
 struct config {
     int cx, cy;                         //cursor coordinates (cx - row, cy - column)
@@ -25,3 +26,5 @@ struct config {
 extern struct config E;
 
 void init(void);
+
+#endif /* CONFIG_H */
