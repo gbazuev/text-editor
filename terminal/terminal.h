@@ -1,10 +1,13 @@
+#ifndef TERMINAL_H
+#define TERMINAL_H
+
 #include <termios.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-#include "Defines/cuarrows.h"
-#include "Defines/config.h"
+#include "defines/keys.h"
+#include "system/config.h"
 
 void die(const char *s);
 
@@ -15,3 +18,5 @@ void enableRawMode(void);
 int readKey(void);
 
 int getCursorPosition(int *rows, int *cols);
+
+#endif /* TERMINAL_H */

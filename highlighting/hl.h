@@ -6,6 +6,7 @@
 #include "system/erow.h"
 #include "system/config.h" 
 #include "defines/keys.h"
+#include "highlighting/hlhelpers.h"
 
 int is_separator(int c);
 

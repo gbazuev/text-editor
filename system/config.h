@@ -3,8 +3,9 @@
 
 #include <time.h>
 #include <termios.h>
-#include "erow.h"
+#include "row/erow.h"
 #include "terminal/terminal.h"
+#include "highlighting/syntax.h"
 
 struct config {
     int cx, cy;                         //cursor coordinates (cx - row, cy - column)

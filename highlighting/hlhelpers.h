@@ -8,7 +8,7 @@
 
 #define HL_BACKGROUND "48;5;237m"
 
-enum highlighting {
+enum hl {
     HL_NORMAL = 0,
     HL_COMMENT,
     HL_MLCOMMENT,

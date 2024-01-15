@@ -1,10 +1,4 @@
-#include <termios.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include "Defines/cuarrows.h"
-#include "Defines/config.h"
+#include "terminal.h"
 
 void die(const char *s)
 {
