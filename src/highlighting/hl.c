@@ -1,4 +1,9 @@
-#include "hl.h"
+#include "highlighting/hl.h"
+
+#include <stdint.h>
+
+#include "row/erow.h"
+#include "highlighting/hlhelpers.h"
 
 int is_separator(int c)
 {

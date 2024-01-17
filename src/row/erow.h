@@ -23,7 +23,7 @@ void freeRow(erow *row);
 
 void deleteRow(const int32_t index);
 
-void insertCharInRow(erow *row, int32_t index, const int8_t ch);
+void insertCharInRow(erow *row, int32_t index, const int32_t ch);
 
 void appendStringInRow(erow *row, const char* str, const size_t len);
 

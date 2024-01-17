@@ -1,0 +1,12 @@
+#ifndef HL_H
+#define HL_H 
+
+int is_separator(int c);
+
+void updateSyntax(erow *row);
+
+int mapSyntaxToColor(const int highlight);
+
+void selectSyntaxHighlight(void);
+
+#endif /* HL_H */

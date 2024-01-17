@@ -1,4 +1,8 @@
-#include "hldb.h"
+#include "highlighting/hldb.h"
+
+#include "highlighting/hlfiletypes.h"
+#include "highlighting/syntax.h"
+#include "highlighting/hlhelpers.h"
 
 struct editorSyntax HIGHLIGHT_DB[] = {
      {

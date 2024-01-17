@@ -19,4 +19,4 @@ enum hl {
     HL_MATCH
 };
 
-#endif /* HIGHLIGHT_H */
+#endif /* HLHELPERS_H */

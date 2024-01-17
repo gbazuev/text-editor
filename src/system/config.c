@@ -1,6 +1,13 @@
 #include "config.h"
 
-struct config E;
+#include <time.h>
+#include <termios.h>
+
+#include "row/erow.h"
+#include "terminal/terminal.h"
+#include "highlighting/syntax.h"
+
+static struct config E;
 
 void init(void)
 {

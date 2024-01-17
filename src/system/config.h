@@ -1,12 +1,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <time.h>
-#include <termios.h>
-#include "row/erow.h"
-#include "terminal/terminal.h"
-#include "highlighting/syntax.h"
-
 struct config {
     int cx, cy;                         //cursor coordinates (cx - row, cy - column)
     int rx;                             //render string horizontal coordinate
@@ -20,7 +14,7 @@ struct config {
     char *filename; 
     char statusmsg[80];
     time_t statusmsg_time;
-    struct editorSyntax *syntax;
+    struct syntax *syntax;
     struct termios original_termios;    //previous terminal state (for recover after exiting editor)
 };
 

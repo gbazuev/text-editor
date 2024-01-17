@@ -1,4 +1,7 @@
-#include "stringbuf.h"
+#include "stringbuf/stringbuf.h"
+
+#include <stdint.h>
+#include <stddef.h>
 
 void abufAppend(struct stringbuf *buf, const char *s, const uint32_t len)   
 {
