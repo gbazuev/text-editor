@@ -2,8 +2,12 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "system/config.h"
 #include "highlighting/hl.h"
+#include "terminal/terminal.h"
 
 char *convertRowsToSingleString(int32_t *buflen)
 {

@@ -2,6 +2,19 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <stdio.h>
+
+#include "render.h"
+#include "input.h"
+#include "defines/keys.h"
+#include "row/erow.h"
+#include "terminal/terminal.h"
+#include "system/config.h"
+#include "defines/settings.h"
+#include "io.h"
+#include "row/erow.h"
 
 char *prompt(char *prompt, void (*callback)(const char*, const int32_t))
 {

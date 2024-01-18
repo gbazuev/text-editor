@@ -1,6 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <time.h>
+#include <termios.h>
+
+#include "row/erow.h"
+
 struct config {
     int cx, cy;                         //cursor coordinates (cx - row, cy - column)
     int rx;                             //render string horizontal coordinate

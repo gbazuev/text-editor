@@ -1,7 +1,11 @@
 #include "row/erow.h"
 
+#include <stdlib.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
+
+#include "highlighting/hl.h"
 #include "defines/settings.h"
 #include "defines/keys.h"
 #include "system/config.h"

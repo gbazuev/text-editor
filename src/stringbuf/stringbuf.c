@@ -1,9 +1,10 @@
 #include "stringbuf/stringbuf.h"
 
 #include <stdint.h>
-#include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 
-void abufAppend(struct stringbuf *buf, const char *s, const uint32_t len)   
+void stringbufAppend(struct stringbuf *buf, const char *s, const uint32_t len)   
 {
     char* new = realloc(buf->str, buf->len + len);
 

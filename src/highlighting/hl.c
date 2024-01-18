@@ -1,9 +1,14 @@
 #include "highlighting/hl.h"
 
 #include <stdint.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "row/erow.h"
 #include "highlighting/hlhelpers.h"
+#include "highlighting/hldb.h"
+#include "system/config.h"
 
 int is_separator(int c)
 {
@@ -149,8 +154,8 @@ void selectSyntaxHighlight()
 
     char *filetype = strchr(E.filename, '.');
 
-    for (uint32_t j = 0; j < HIGHLIGHT_DB_ENTRIES; ++j) {
-        struct editorSyntax *s = &HIGHLIGHT_DB[j];
+    for (uint32_t j = 0; j < HLDB_ENTRIES; ++j) {
+        struct editorSyntax *s = &HLDB[j];
         uint32_t i = 0;
 
         while (s->filematch[i]) {

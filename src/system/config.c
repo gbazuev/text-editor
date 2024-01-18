@@ -6,8 +6,9 @@
 #include "row/erow.h"
 #include "terminal/terminal.h"
 #include "highlighting/syntax.h"
+#include "input.h"
 
-static struct config E;
+struct config E;
 
 void init(void)
 {

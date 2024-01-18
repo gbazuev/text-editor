@@ -1,6 +1,8 @@
 #ifndef STRINGBUF_H
 #define STRINGBUF_H
 
+#include <stdint.h>
+
 struct stringbuf {
     char* str;
     unsigned int len;

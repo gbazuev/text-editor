@@ -1,6 +1,9 @@
 #ifndef EROW_H
 #define EROW_H
 
+#include <stdint.h>
+#include <stddef.h>
+
 typedef struct erow {
     int32_t idx;
     int32_t size;

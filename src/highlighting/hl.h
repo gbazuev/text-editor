@@ -1,6 +1,8 @@
 #ifndef HL_H
 #define HL_H 
 
+#include "row/erow.h"
+
 int is_separator(int c);
 
 void updateSyntax(erow *row);

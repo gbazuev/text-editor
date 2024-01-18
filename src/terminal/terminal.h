@@ -11,4 +11,6 @@ int readKey(void);
 
 int getCursorPosition(int *rows, int *cols);
 
+short getWindowSize(int *rows, int *cols);
+
 #endif /* TERMINAL_H */
