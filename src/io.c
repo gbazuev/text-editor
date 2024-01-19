@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "system/config.h"
-#include "highlighting/hl.h"
-#include "terminal/terminal.h"
+#include "src/system/config.h"
+#include "src/highlighting/hl.h"
+#include "src/terminal/terminal.h"
 
 char *convertRowsToSingleString(int32_t *buflen)
 {

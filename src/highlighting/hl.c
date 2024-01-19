@@ -5,10 +5,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "row/erow.h"
-#include "highlighting/hlhelpers.h"
-#include "highlighting/hldb.h"
-#include "system/config.h"
+#include "src/row/erow.h"
+#include "src/highlighting/hlhelpers.h"
+#include "src/highlighting/hldb.h"
+#include "src/system/config.h"
 
 int is_separator(int c)
 {
@@ -22,7 +22,7 @@ void updateSyntax(erow *row)
     
     if (E.syntax == NULL) return;
     
-    char **keywords = E.syntax->keywords;
+    char **keywords = E.syntax->;
 
     const char *scs = E.syntax->singleline_comment_start;
     const char *mcs = E.syntax->multiline_comment_start;

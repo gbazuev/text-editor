@@ -6,8 +6,8 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 
-#include "defines/keys.h"
-#include "system/config.h"
+#include "src/defines/keys.h"
+#include "src/system/config.h"
 
 void die(const char *s)
 {

@@ -1,4 +1,4 @@
-#include "search.h"
+#include "src/search.h"
 
 void searchCallback(const char *query, const int32_t key)
 {

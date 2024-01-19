@@ -1,8 +1,8 @@
-#include "terminal/terminal.h"
-#include "system/config.h"
-#include "input.h"
-#include "render.h"
-#include "io.h"
+#include "src/terminal/terminal.h"
+#include "src/system/config.h"
+#include "src/input.h"
+#include "src/render.h"
+#include "src/io.h"
 
 int main(int argc, const char *argv[])  
 {

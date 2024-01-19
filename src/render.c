@@ -4,10 +4,10 @@
 #include <unistd.h>
 #include <stdarg.h>
 
-#include "system/config.h"
-#include "stringbuf/stringbuf.h"
-#include "highlighting/hlhelpers.h"
-#include "defines/settings.h"
+#include "src/system/config.h"
+#include "src/stringbuf/stringbuf.h"
+#include "src/highlighting/hlhelpers.h"
+#include "src/defines/settings.h"
 
 void scroll()   
 {
