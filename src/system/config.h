@@ -4,7 +4,7 @@
 #include <time.h>
 #include <termios.h>
 
-#include "src/row/erow.h"
+#include "row/erow.h"
 
 struct config {
     int cx, cy;                         //cursor coordinates (cx - row, cy - column)

@@ -1,6 +1,6 @@
 #include "editing.h"
 
-#include "src/system/config.h"
+#include "system/config.h"
 
 void insertChar(const int8_t character)
 {

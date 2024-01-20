@@ -7,15 +7,15 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#include "src/render.h"
-#include "src/defines/keys.h"
-#include "src/row/erow.h"
-#include "src/terminal/terminal.h"
-#include "src/system/config.h"
-#include "src/defines/settings.h"
-#include "src/io.h"
-#include "src/row/erow.h"
-#include "src/editing.h"
+#include "render.h"
+#include "defines/keys.h"
+#include "row/erow.h"
+#include "terminal/terminal.h"
+#include "system/config.h"
+#include "defines/settings.h"
+#include "io.h"
+#include "row/erow.h"
+#include "editing.h"
 
 char *prompt(char *prompt, void (*callback)(const char*, const int32_t))
 {

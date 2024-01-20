@@ -1,5 +1,9 @@
 #include "src/search.h"
 
+#include "system/config.h"
+#include "defines/keys.h"
+#include "highlighting/hlhelpers.h" 
+
 void searchCallback(const char *query, const int32_t key)
 {
     static int last_match = -1;

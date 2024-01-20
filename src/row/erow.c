@@ -5,10 +5,10 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "src/highlighting/hl.h"
-#include "src/defines/settings.h"
-#include "src/defines/keys.h"
-#include "src/system/config.h"
+#include "highlighting/hl.h"
+#include "defines/settings.h"
+#include "defines/keys.h"
+#include "system/config.h"
 
 int convertCxToRx(erow* row, const int32_t cx)
 {

@@ -1,4 +1,4 @@
-#include "src/highlighting/hlfiletypes.h"
+#include "highlighting/hlfiletypes.h"
 
 char *C_FILETYPES[] = {".c", ".h", (void*) 0};
 char *C_KEYWORDS[] = {
