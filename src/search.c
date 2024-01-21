@@ -1,15 +1,20 @@
 #include "src/search.h"
 
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "system/config.h"
 #include "defines/keys.h"
-#include "highlighting/hlhelpers.h" 
+#include "highlighting/hlhelpers.h"
+#include "input.h"
 
 void searchCallback(const char *query, const int32_t key)
 {
-    static int last_match = -1;
-    static int direction = 1;
+    static int32_t last_match = -1;
+    static int32_t direction = 1;
 
-    static int saved_highlight_line;
+    static int32_t saved_highlight_line;
     static char *saved_highlight = NULL;
 
     if (saved_highlight)    {
@@ -32,9 +37,9 @@ void searchCallback(const char *query, const int32_t key)
     }
 
     if (last_match == -1) direction = 1;
-    int current = last_match;
+    int32_t current = last_match;
 
-    for (int i = 0; i < E.rowsnum; ++i) {
+    for (int32_t i = 0; i < E.rowsnum; ++i) {
         current += direction;
         if (current == -1) current = E.rowsnum - 1;
         else if (current == E.rowsnum) current = 0;
@@ -58,8 +63,8 @@ void searchCallback(const char *query, const int32_t key)
 
 void search()
 {
-    int saved_cx = E.cx, saved_cy = E.cy;
-    int saved_coloff = E.coloff, saved_rowoff = E.rowoff;
+    int32_t saved_cx = E.cx, saved_cy = E.cy;
+    int32_t saved_coloff = E.coloff, saved_rowoff = E.rowoff;
 
     char *query = prompt("Search: %s (Use ESC/Arrows/Enter)", searchCallback);
     if (query) free(query);

@@ -8,9 +8,10 @@
 #include "row/erow.h"
 #include "highlighting/hlhelpers.h"
 #include "highlighting/hldb.h"
+#include "highlighting/esyntax.h"
 #include "system/config.h"
 
-int is_separator(int c)
+int32_t is_separator(int32_t c)
 {
     return isspace(c) || c == '\0' || strchr(",.()+-/*=~%<>[];", c) != NULL;
 }
@@ -22,7 +23,7 @@ void updateSyntax(erow *row)
     
     if (E.syntax == NULL) return;
     
-    char **keywords = E.syntax->;
+    char **keywords = E.syntax->keywords;
 
     const char *scs = E.syntax->singleline_comment_start;
     const char *mcs = E.syntax->multiline_comment_start;
@@ -32,8 +33,8 @@ void updateSyntax(erow *row)
     const uint32_t mcs_len = mcs ? strlen(mcs) : 0;
     const uint32_t mce_len = mce ? strlen(mcs) : 0;
 
-    int prev_separator = 1, in_string = 0, in_comment = (row->idx > 0 && E.row[row->idx - 1].hl_open_comment);
-    int i = 0;
+    int32_t prev_separator = 1, in_string = 0, in_comment = (row->idx > 0 && E.row[row->idx - 1].hl_open_comment);
+    int32_t i = 0;
 
     while (i < row->rendersize) {
         const char symbol = row->render[i];
@@ -67,7 +68,7 @@ void updateSyntax(erow *row)
             }
         }
 
-        if (E.syntax->flags && HL_HIGHLIGHT_STRINGS)    {
+        if (E.syntax->flags & HL_HIGHLIGHT_STRINGS)    {
             if (in_string)  {
                 row->highlight[i] = HL_STRING;
 
@@ -92,7 +93,7 @@ void updateSyntax(erow *row)
             }
         }
 
-        if (E.syntax->flags && HL_HIGHLIGHT_NUMBERS) {
+        if (E.syntax->flags & HL_HIGHLIGHT_NUMBERS) {
             if ((isdigit(symbol) && (prev_separator || prev_highlight == HL_NUMBER)) || (symbol == '.' && prev_highlight == HL_NUMBER))   {
                 row->highlight[i] = HL_NUMBER;
                 prev_separator = 0;
@@ -127,13 +128,13 @@ void updateSyntax(erow *row)
         i++;
     }
 
-    int changed = (row->hl_open_comment != in_comment);
+    int32_t changed = (row->hl_open_comment != in_comment);
     row->hl_open_comment = in_comment;
     if (changed && row->idx + 1 < E.rowsnum)
         updateSyntax(&E.row[row->idx + 1]);
 }
 
-int mapSyntaxToColor(const int highlight)
+int32_t mapSyntaxToColor(const int32_t highlight)
 {
     switch (highlight)  {
         case HL_COMMENT:
@@ -147,19 +148,19 @@ int mapSyntaxToColor(const int highlight)
     }
 }
 
-void selectSyntaxHighlight()
+void selectSyntaxHighlight(void)
 {
     E.syntax = NULL;
     if (E.filename == NULL) return;
 
     char *filetype = strchr(E.filename, '.');
 
-    for (uint32_t j = 0; j < HLDB_ENTRIES; ++j) {
-        struct editorSyntax *s = &HLDB[j];
+    for (uint32_t j = 0; j < HLDB_SIZE; ++j) { //TODO: fix HLDB_SIZE invalid application of sizeof JetBrains Fleet
+        struct esyntax *s = &HLDB[j];
         uint32_t i = 0;
 
         while (s->filematch[i]) {
-            int is_filetype = (s->filematch[i][0] == '.');
+            int32_t is_filetype = (s->filematch[i][0] == '.');
             if ((is_filetype && filetype && !strcmp(filetype, s->filematch[i])) || (!is_filetype && strstr(E.filename, s->filematch[i])))   {
                 E.syntax = s;
 

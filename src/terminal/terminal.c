@@ -1,5 +1,6 @@
 #include "terminal.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -46,9 +47,9 @@ void enableRawMode(void)
     }
 }
 
-int readKey(void)
+int32_t readKey(void)
 {
-    int nread;
+    int32_t nread;
     char c;
     
     while ((nread = read(STDIN_FILENO, &c, 1)) != 1)    {
@@ -102,10 +103,10 @@ int readKey(void)
     else return c;
 }
 
-int getCursorPosition(int *rows, int *cols)
+int32_t getCursorPosition(int32_t *rows, int32_t *cols)
 {
     char buf[32];
-    unsigned int i = 0u;
+    uint32_t i = 0u;
     
     if (write(STDOUT_FILENO, "\x1b[6n", 4) != 4) return -1;
    
@@ -123,7 +124,7 @@ int getCursorPosition(int *rows, int *cols)
     return 0;
 }
  
-short getWindowSize(int *rows, int *cols)
+int16_t getWindowSize(int32_t *rows, int32_t *cols)
 {
     struct winsize ws;
 

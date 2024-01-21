@@ -14,9 +14,9 @@ typedef struct erow {
     int32_t hl_open_comment;
 } erow;
 
-int convertCxToRx(erow *row, const int32_t cx);
+int32_t convertCxToRx(erow *row, const int32_t cx);
 
-int convertRxToCx(erow *row, const int32_t rx);
+int32_t convertRxToCx(erow *row, const int32_t rx);
 
 void updateRow(erow *row);
 

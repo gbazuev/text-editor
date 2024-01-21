@@ -10,10 +10,10 @@
 #include "defines/keys.h"
 #include "system/config.h"
 
-int convertCxToRx(erow* row, const int32_t cx)
+int32_t convertCxToRx(erow* row, const int32_t cx)
 {
-    int rx = 0;
-    for (int j = 0; j < cx; ++j)    {
+    int32_t rx = 0;
+    for (int32_t j = 0; j < cx; ++j)    {
         if (row->chars[j] == '\t')  {
             rx += (EDITOR_TAB_STOP - 1) - (rx % EDITOR_TAB_STOP);
         }
@@ -23,9 +23,9 @@ int convertCxToRx(erow* row, const int32_t cx)
     return rx;
 }
 
-int convertRxToCx(erow *row, const int32_t rx)
+int32_t convertRxToCx(erow *row, const int32_t rx)
 {
-    int current_rx = 0, cx;
+    int32_t current_rx = 0, cx;
     for (cx = 0; cx < row->size; ++cx)  {
         if (row->chars[cx] == '\t')
             current_rx += (EDITOR_TAB_STOP - 1) - (current_rx % EDITOR_TAB_STOP);
@@ -39,8 +39,7 @@ int convertRxToCx(erow *row, const int32_t rx)
 
 void updateRow(erow *row)
 {
-    int tabs = 0;
-    int j;
+    int32_t tabs = 0, j;
     for (j = 0; j < row->size; ++j) {
         if (row->chars[j] == '\t') ++tabs;
     }
@@ -48,7 +47,7 @@ void updateRow(erow *row)
     free(row->render);
     row->render = malloc(row->size + tabs * (EDITOR_TAB_STOP - 1) + 1);
 
-    int idx = 0;
+    int32_t idx = 0;
     for (j = 0; j < row->size; ++j) {
         if (row->chars[j] == '\t')  {
             row->render[idx++] = ' ';
@@ -70,7 +69,7 @@ void insertRow(const int32_t index, const char *s, const size_t len)
     E.row = realloc(E.row, sizeof(erow) * (E.rowsnum + 1));
     memmove(&E.row[index + 1], &E.row[index], sizeof(erow) * (E.rowsnum - index));
     
-    for (int j = index + 1; j <= E.rowsnum; ++j)   E.row[j].idx++;
+    for (int32_t j = index + 1; j <= E.rowsnum; ++j)   E.row[j].idx++;
 
     E.row[index].idx = index;
 
@@ -102,7 +101,7 @@ void deleteRow(const int32_t index)
     freeRow(&E.row[index]);
     memmove(&E.row[index], &E.row[index + 1], sizeof(erow) * (E.rowsnum - index - 1));
     
-    for (int j = index; j < E.rowsnum - 1; ++j) E.row[j].idx--;
+    for (int32_t j = index; j < E.rowsnum - 1; ++j) E.row[j].idx--;
 
     E.rowsnum--;
     E.dirty++;

@@ -2,3 +2,4 @@ edcopy.c
 editor
 .vscode
 text-editor/editor.c
+.cache/jb

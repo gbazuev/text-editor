@@ -5,7 +5,7 @@
 
 struct stringbuf {
     char* str;
-    unsigned int len;
+    uint32_t len;
 };
 
 #define STRINGBUF_INIT {NULL, 0}

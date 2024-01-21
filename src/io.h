@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-char *convertRowsToSingleString(int32_t buflen);
+char *convertRowsToSingleString(int32_t *buflen);
 
 void openFile(const char *filename);
 

@@ -12,7 +12,7 @@ void insertChar(const int8_t character)
   E.cx++;
 }
 
-void insertNewLine() // "Enter" keypress
+void insertNewLine(void) // "Enter" keypress
 {
   if (E.cx == 0)  {
     insertRow(E.cy, "", 0);
@@ -29,7 +29,7 @@ void insertNewLine() // "Enter" keypress
   E.cx = 0;
 }
 
-void deleteChar()
+void deleteChar(void)
 {   
   if (E.cy == E.rowsnum || (E.cx == 0 && E.cy == 0)) return;
 

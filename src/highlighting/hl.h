@@ -1,13 +1,15 @@
 #ifndef HL_H
 #define HL_H 
 
+#include <stdint.h>
+
 #include "row/erow.h"
 
-int is_separator(int c);
+int32_t is_separator(int32_t c);
 
 void updateSyntax(erow *row);
 
-int mapSyntaxToColor(const int highlight);
+int mapSyntaxToColor(const int32_t highlight);
 
 void selectSyntaxHighlight(void);
 

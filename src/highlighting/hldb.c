@@ -1,10 +1,10 @@
 #include "highlighting/hldb.h"
 
 #include "highlighting/hlfiletypes.h"
-#include "highlighting/syntax.h"
+#include "highlighting/esyntax.h"
 #include "highlighting/hlhelpers.h"
 
-struct editorSyntax HIGHLIGHT_DB[] = {
+struct esyntax HLDB[] = {
      {
         "c",
         C_FILETYPES,

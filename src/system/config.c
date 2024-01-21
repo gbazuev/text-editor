@@ -5,7 +5,7 @@
 
 #include "row/erow.h"
 #include "terminal/terminal.h"
-#include "highlighting/syntax.h"
+#include "highlighting/esyntax.h"
 #include "input.h"
 
 struct config E;

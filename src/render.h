@@ -1,7 +1,9 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-void scroll();
+#include "stringbuf/stringbuf.h"
+
+void scroll(void);
 
 void renderRows(struct stringbuf *buf);
 

@@ -4,8 +4,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <stdio.h>
-#include <fcntl.h>
+#include <unistd.h>
 
 #include "render.h"
 #include "defines/keys.h"
@@ -14,8 +13,8 @@
 #include "system/config.h"
 #include "defines/settings.h"
 #include "io.h"
-#include "row/erow.h"
 #include "editing.h"
+#include "search.h"
 
 char *prompt(char *prompt, void (*callback)(const char*, const int32_t))
 {
@@ -29,7 +28,7 @@ char *prompt(char *prompt, void (*callback)(const char*, const int32_t))
         setStatusMessage(prompt, buf);
         refreshScreen();
 
-        int c = readKey();
+        int32_t c = readKey();
         if (c == DELETE_KEY || c == CTRL_KEY('h') || c == BACKSPACE)    {
             if (bufsize) buf[--bufsize] = '\0';
         } else if (c == '\x1b')    {
@@ -93,7 +92,7 @@ void moveCursor(const int32_t key)
     }
 
     row = (E.cy >= E.rowsnum) ? NULL : &E.row[E.cy];
-    const int rowlen = row ? row->size : 0;
+    const int32_t rowlen = row ? row->size : 0;
     if (E.cx > rowlen)  {
         E.cx = rowlen;
     } 
@@ -101,8 +100,8 @@ void moveCursor(const int32_t key)
 
 void processKeypress(void)
 {
-    static int quit_times = EDITOR_QUIT_TIMES;
-    const int c = readKey();
+    static int32_t quit_times = EDITOR_QUIT_TIMES;
+    const int32_t c = readKey();
 
     switch (c)  {
         case '\r':

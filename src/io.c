@@ -4,14 +4,19 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
 
 #include "system/config.h"
 #include "highlighting/hl.h"
 #include "terminal/terminal.h"
+#include "render.h"
+#include "input.h"
 
 char *convertRowsToSingleString(int32_t *buflen)
 {
-    int totallen = 0, j;
+    int32_t totallen = 0, j;
     for (j = 0; j < E.rowsnum; ++j) {
         totallen += E.row[j].size + 1;
     }

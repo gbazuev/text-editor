@@ -1,8 +1,10 @@
 #ifndef HLDB_H
 #define HLDB_H
 
-extern struct editorSyntax HLDB;
+#include "highlighting/esyntax.h"
 
-#define HLDB_ENTRIES (sizeof(HLDB) / sizeof(HLDB[0]))
+extern struct esyntax HLDB[];
+
+#define HLDB_SIZE (sizeof(HLDB) / sizeof(HLDB[0]))
 
 #endif /* HLDB_H */

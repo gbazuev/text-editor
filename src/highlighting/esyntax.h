@@ -1,14 +1,16 @@
 #ifndef SYNTAX_H
 #define SYNTAX_H
 
-struct editorSyntax {
+#include <stdint.h>
+
+struct esyntax {
     char *filetype;
     char **filematch;
     char **keywords;
     char *singleline_comment_start;
     char *multiline_comment_start;
     char *multiline_comment_end;
-    int flags;
+    int32_t flags;
 };
 
 #endif /* SYNTAX_H */

@@ -5,21 +5,22 @@
 #include <termios.h>
 
 #include "row/erow.h"
+#include "highlighting/esyntax.h"
 
 struct config {
-    int cx, cy;                         //cursor coordinates (cx - row, cy - column)
-    int rx;                             //render string horizontal coordinate
-    int coloff;
-    int rowoff;
-    int screenrows;
-    int screencols;
-    int rowsnum;
+    int32_t cx, cy;                         //cursor coordinates (cx - row, cy - column)
+    int32_t rx;                             //render string horizontal coordinate
+    int32_t coloff;
+    int32_t rowoff;
+    int32_t screenrows;
+    int32_t screencols;
+    int32_t rowsnum;
     erow *row;                          //file rows
-    int dirty;
+    int32_t dirty;
     char *filename; 
     char statusmsg[80];
     time_t statusmsg_time;
-    struct syntax *syntax;
+    struct esyntax *syntax;
     struct termios original_termios;    //previous terminal state (for recover after exiting editor)
 };
 
