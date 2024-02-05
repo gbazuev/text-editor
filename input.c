@@ -7,11 +7,11 @@
 #include <unistd.h>
 
 #include "render.h"
-#include "defines/keys.h"
-#include "row/erow.h"
-#include "terminal/terminal.h"
-#include "system/config.h"
-#include "defines/settings.h"
+#include "keys.h"
+#include "erow.h"
+#include "terminal.h"
+#include "config.h"
+#include "settings.h"
 #include "io.h"
 #include "editing.h"
 #include "search.h"

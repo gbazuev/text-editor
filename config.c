@@ -3,10 +3,7 @@
 #include <time.h>
 #include <termios.h>
 
-#include "row/erow.h"
-#include "terminal/terminal.h"
-#include "highlighting/esyntax.h"
-#include "input.h"
+#include "terminal.h"
 
 struct config E;
 

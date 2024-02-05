@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#include "row/erow.h"
+#include "erow.h"
 
 int32_t is_separator(int32_t c);
 

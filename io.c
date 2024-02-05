@@ -8,9 +8,9 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include "system/config.h"
-#include "highlighting/hl.h"
-#include "terminal/terminal.h"
+#include "config.h"
+#include "hl.h"
+#include "terminal.h"
 #include "render.h"
 #include "input.h"
 

@@ -1,7 +1,7 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "stringbuf/stringbuf.h"
+#include "stringbuf.h"
 
 void scroll(void);
 

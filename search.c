@@ -1,12 +1,12 @@
-#include "src/search.h"
+#include "search.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "system/config.h"
-#include "defines/keys.h"
-#include "highlighting/hlhelpers.h"
+#include "config.h"
+#include "keys.h"
+#include "hlhelpers.h"
 #include "input.h"
 
 void searchCallback(const char *query, const int32_t key)

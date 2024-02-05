@@ -3,9 +3,10 @@
 
 #include <time.h>
 #include <termios.h>
+#include <stdint.h>
 
-#include "row/erow.h"
-#include "highlighting/esyntax.h"
+#include "erow.h"
+#include "esyntax.h"
 
 struct config {
     int32_t cx, cy;                         //cursor coordinates (cx - row, cy - column)

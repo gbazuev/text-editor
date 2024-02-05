@@ -7,12 +7,11 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "system/config.h"
-#include "stringbuf/stringbuf.h"
-#include "highlighting/hlhelpers.h"
-#include "highlighting/hl.h"
-#include "defines/settings.h"
-#include "render.h"
+#include "config.h"
+#include "stringbuf.h"
+#include "hlhelpers.h"
+#include "hl.h"
+#include "settings.h"
 
 void scroll()   
 {

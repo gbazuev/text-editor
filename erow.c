@@ -1,14 +1,13 @@
-#include "row/erow.h"
+#include "erow.h"
 
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
 
-#include "highlighting/hl.h"
-#include "defines/settings.h"
-#include "defines/keys.h"
-#include "system/config.h"
+#include "hl.h"
+#include "settings.h"
+#include "config.h"
 
 int32_t convertCxToRx(erow* row, const int32_t cx)
 {

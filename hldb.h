@@ -1,7 +1,9 @@
 #ifndef HLDB_H
 #define HLDB_H
 
-#include "highlighting/esyntax.h"
+#include "esyntax.h"
+#include "hlfiletypes.h"
+#include "hlhelpers.h"
 
 extern struct esyntax HLDB[];
 

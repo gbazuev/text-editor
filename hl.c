@@ -1,15 +1,15 @@
-#include "highlighting/hl.h"
+#include "hl.h"
 
 #include <stdint.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "row/erow.h"
-#include "highlighting/hlhelpers.h"
-#include "highlighting/hldb.h"
-#include "highlighting/esyntax.h"
-#include "system/config.h"
+#include "erow.h"
+#include "hlhelpers.h"
+#include "hldb.h"
+#include "esyntax.h"
+#include "config.h"
 
 int32_t is_separator(int32_t c)
 {

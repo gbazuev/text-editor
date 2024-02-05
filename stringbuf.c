@@ -1,4 +1,4 @@
-#include "stringbuf/stringbuf.h"
+#include "stringbuf.h"
 
 #include <stdint.h>
 #include <stdlib.h>
