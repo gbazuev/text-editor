@@ -14,7 +14,7 @@ void stringbufAppend(struct stringbuf *buf, const char *s, const uint32_t len)
     buf->len += len;
 }
 
-void abufFree(struct stringbuf *buf) 
+void stringbufFree(struct stringbuf *buf) 
 {
     free(buf->str);
 }

@@ -1,13 +1,15 @@
 CC=gcc	
 CFLAGS=-Wall -Wextra -pedantic -std=c2x
 
-objects = terminal.o stringbuf.o search.o render.o \
+objects = main.o terminal.o stringbuf.o search.o render.o \
 		  io.o input.o hlfiletypes.o hldb.o hl.o \
 		  erow.o editing.o config.o
 
-
 editor: $(objects)
-	$(CC) -o editor.o $(objects)
+	$(CC) -o editor $(objects)
+
+main.o: main.c input.h render.h terminal.h config.h io.h
+	$(CC) -c $(CFLAGS) main.c input.h render.h terminal.h config.h io.h
 
 terminal.o: terminal.c keys.h config.h
 	$(CC) -c $(CFLAGS) terminal.c

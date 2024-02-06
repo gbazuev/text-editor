@@ -1,5 +1,6 @@
 #include "config.h"
 
+#include <stdlib.h>
 #include <time.h>
 #include <termios.h>
 
@@ -27,10 +28,4 @@ void init(void)
     }
 
     E.screenrows -= 2;
-}
-
-int main(int argc, const char** const argv)
-{
-    init();
-    return 0;
 }
