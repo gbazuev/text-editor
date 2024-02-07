@@ -139,12 +139,12 @@ int32_t mapSyntaxToColor(const int32_t highlight)
     switch (highlight)  {
         case HL_COMMENT:
         case HL_MLCOMMENT: return 244;
-        case HL_KEYWORD1: return 202;
-        case HL_KEYWORD2: return 202;
-        case HL_NUMBER: return 251; //TODO: 8-bit colors!!!
+        case HL_KEYWORD1: return 208;
+        case HL_KEYWORD2: return 208;
+        case HL_NUMBER: return 99; //TODO: 8-bit colors!!!
         case HL_MATCH: return 196;
-        case HL_STRING: return 70;
-        default: return 37;
+        case HL_STRING: return 106;
+        default: return 196;
     }
 }
 

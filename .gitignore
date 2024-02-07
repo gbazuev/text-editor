@@ -3,3 +3,6 @@ editor
 .vscode
 text-editor/editor.c
 .cache/jb
+**.h.gch
+t.c
+**.o

@@ -53,16 +53,25 @@ void renderRows(struct stringbuf *buf)
 
                 int32_t padding = (E.screencols - msglen) / 2;
 
-                if (padding)    {
+                if (padding)    { //TODO: add lines numbers (simply add int32_t line_num and replace ~)
+                    stringbufAppend(buf, "\x1b[48;5;240m", 11);
                     stringbufAppend(buf, "~", 1);
+                    stringbufAppend(buf, HL_RESET, 5);
                     --padding;
                 }
 
-                while (padding--)  stringbufAppend(buf, " ", 1);
-
+                while (padding--)  {
+                    stringbufAppend(buf, "\x1b[", 2);
+                    stringbufAppend(buf, HL_BACKGROUND, 9);
+                    stringbufAppend(buf, " ", 1);
+                }
                 stringbufAppend(buf, msg, msglen);
             } else {
+                stringbufAppend(buf, "\x1b[48;5;240m", 11);
                 stringbufAppend(buf, "~", 1);
+                stringbufAppend(buf, HL_RESET, 5);
+                stringbufAppend(buf, "\x1b[", 2);
+                stringbufAppend(buf, HL_BACKGROUND, 9);
             }
         } else {
             int32_t len = E.row[filerow].rendersize - E.coloff;

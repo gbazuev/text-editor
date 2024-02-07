@@ -6,7 +6,7 @@
 
 #define HL_RESET "\x1b[39m"
 
-#define HL_BACKGROUND "48;5;237m"
+#define HL_BACKGROUND "48;5;235m" //TODO: place it in hl enum?
 
 enum hl {
     HL_NORMAL = 0,

@@ -135,9 +135,9 @@ int16_t getWindowSize(int32_t *rows, int32_t *cols)
 
         return getCursorPosition(rows, cols);
     }
-        else {
-            *cols = ws.ws_col;
-            *rows = ws.ws_row;
-            return 0;
+    else {
+        *cols = ws.ws_col;
+        *rows = ws.ws_row;
+        return 0;
     }
 }
