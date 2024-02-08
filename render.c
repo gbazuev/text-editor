@@ -80,18 +80,25 @@ void renderRows(struct stringbuf *buf)
             char *c = &E.row[filerow].render[E.coloff]; //TODO: this should be put into a separate procedure
             char *highlight = &E.row[filerow].highlight[E.coloff];
             int32_t current_color = -1;
+            
+            if (len == 0)   {
+                stringbufAppend(buf, "\x1b[", 2);
+                stringbufAppend(buf, HL_BACKGROUND, 9);
+                goto ENDLINE;
+            }
 
             for (int32_t j = 0; j < len; ++j)   {
                 if (iscntrl(c[j]))  {
                     const char symbol = (c[j] <= 26) ? '@' + c[j] : '?';
                     stringbufAppend(buf, "\x1b[7m", 4); //TODO: highlighting!!!
+                    //stringbufAppend(buf, HL_BACKGROUND, 9);
                     stringbufAppend(buf, &symbol, 1);
-                    stringbufAppend(buf, "\x1b[m", 3);
                     if (current_color != -1) {
                         char cbuf[16];
                         int32_t clen = snprintf(cbuf, sizeof(cbuf), "\x1b[38;5;%d", current_color);
-                        stringbufAppend(buf, cbuf, clen);
+                        stringbufAppend(buf, "\x1b[", 2);
                         stringbufAppend(buf, HL_BACKGROUND, 9);
+                        stringbufAppend(buf, cbuf, clen);
                     }
                 } else if (highlight[j] == HL_NORMAL)  {
                     stringbufAppend(buf, HL_RESET, 5);
@@ -111,6 +118,7 @@ void renderRows(struct stringbuf *buf)
             stringbufAppend(buf, HL_RESET, 5);
         }
 
+ENDLINE:
     stringbufAppend(buf, "\x1b[K", 3);
     stringbufAppend(buf, "\r\n", 2);
   }
