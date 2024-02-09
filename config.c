@@ -10,7 +10,7 @@ struct config E;
 
 void init(void)
 {
-    E.cx = 0;
+    E.cx = 3; //because of line numbers rendering (space + number + space)
     E.cy = 0;
     E.rx = 0;
     E.coloff = 0;

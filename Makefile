@@ -25,7 +25,6 @@ render.o: render.c config.h stringbuf.h hlhelpers.h hl.h settings.h
 
 io.o: io.c config.h hl.h terminal.h render.h input.h
 	$(CC) -c $(CFLAGS) io.c config.h hl.h terminal.h render.h input.h
-
 input.o: input.c render.h keys.h erow.h terminal.h config.h \
 	settings.h io.h editing.h search.h
 	$(CC) -c $(CFLAGS) input.c render.h keys.h erow.h terminal.h \
@@ -49,5 +48,6 @@ editing.o: editing.c config.h
 config.o: config.c terminal.h
 	$(CC) -c $(CFLAGS) config.c terminal.h
 
-.PHONY clean:
+.PHONY : clean
+clean:
 	rm editor $(objects)

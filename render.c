@@ -1,5 +1,6 @@
 #include "render.h"
 
+#include <alloca.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -12,10 +13,11 @@
 #include "hlhelpers.h"
 #include "hl.h"
 #include "settings.h"
+#include "terminal.h"
 
 void scroll()   
 {
-    E.rx = 0;
+    E.rx = 3;
     if (E.cy < E.rowsnum)   {
         E.rx = convertCxToRx(&E.row[E.cy], E.cx);
     }
@@ -39,10 +41,10 @@ void scroll()
 
 void renderRows(struct stringbuf *buf)
 {
-   int32_t y;
+   int32_t y, linenum = 1;
    for (y = 0; y < E.screenrows; ++y)  {
         const int32_t filerow = y + E.rowoff;
-
+        
         if (filerow >= E.rowsnum) {
             if (E.rowsnum == 0 && y == E.screenrows / 3)   {
                 char msg[80];
@@ -53,22 +55,30 @@ void renderRows(struct stringbuf *buf)
 
                 int32_t padding = (E.screencols - msglen) / 2;
 
-                if (padding)    { //TODO: add lines numbers (simply add int32_t line_num and replace ~)
-                    stringbufAppend(buf, "\x1b[48;5;240m", 11);
-                    stringbufAppend(buf, "~", 1);
-                    stringbufAppend(buf, HL_RESET, 5);
+                if (padding)    { 
+                    stringbufAppend(buf, "\x1b[48;5;236m", 11); //
+                    stringbufAppend(buf, " ", 1);               //
+                    stringbufAppend(buf, "\x1b[48;5;236m", 11); //
+                    stringbufAppend(buf, "~", 1);               // split this into stringbuf function (flags or something else)
+                    stringbufAppend(buf, "\x1b[48;5;236m", 11); //
+                    stringbufAppend(buf, " ", 1);               //
                     --padding;
-                }
 
-                while (padding--)  {
-                    stringbufAppend(buf, "\x1b[", 2);
-                    stringbufAppend(buf, HL_BACKGROUND, 9);
-                    stringbufAppend(buf, " ", 1);
+                    while (padding--)  {
+                        stringbufAppend(buf, "\x1b[", 2);
+                        stringbufAppend(buf, HL_BACKGROUND, 9);
+                        stringbufAppend(buf, " ", 1);
+                    }
+
+                    stringbufAppend(buf, msg, msglen);
                 }
-                stringbufAppend(buf, msg, msglen);
             } else {
-                stringbufAppend(buf, "\x1b[48;5;240m", 11);
-                stringbufAppend(buf, "~", 1);
+                stringbufAppend(buf, "\x1b[48;5;236m", 11);
+                stringbufAppend(buf, " ", 1);
+                stringbufAppend(buf, "\x1b[48;5;236m", 11); //TODO: add special flags like BACKGROUND_STRING in stringbufAppend proc.
+                stringbufAppend(buf, "~", 1); //TODO: add current line highlighting
+                stringbufAppend(buf, "\x1b[48;5;236m", 11);
+                stringbufAppend(buf, " ", 1);
                 stringbufAppend(buf, HL_RESET, 5);
                 stringbufAppend(buf, "\x1b[", 2);
                 stringbufAppend(buf, HL_BACKGROUND, 9);
@@ -81,6 +91,17 @@ void renderRows(struct stringbuf *buf)
             char *highlight = &E.row[filerow].highlight[E.coloff];
             int32_t current_color = -1;
             
+            stringbufAppend(buf, "\x1b[48;5;236m", 11);
+            stringbufAppend(buf, " ", 1);
+            stringbufAppend(buf, "\x1b[48;5;236m", 11);
+            
+            char numbuf[16];
+            int32_t numlen = snprintf(numbuf, sizeof(numbuf), "%d", linenum++);
+            stringbufAppend(buf, numbuf, numlen);
+            
+            stringbufAppend(buf, "\x1b[48;5;236m", 11);
+            stringbufAppend(buf, " ", 1);
+
             if (len == 0)   {
                 stringbufAppend(buf, "\x1b[", 2);
                 stringbufAppend(buf, HL_BACKGROUND, 9);
@@ -164,7 +185,6 @@ void renderMessageBar(struct stringbuf *buf)
 void refreshScreen(void)
 {
     scroll();
-
     struct stringbuf sbuf = STRINGBUF_INIT;
 
     stringbufAppend(&sbuf, "\x1b[?25l", 6);
