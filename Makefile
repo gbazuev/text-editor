@@ -3,7 +3,7 @@ CFLAGS=-Wall -Wextra -pedantic -std=c2x
 
 objects = main.o terminal.o stringbuf.o search.o render.o \
 		  io.o input.o hlfiletypes.o hldb.o hl.o \
-		  erow.o editing.o config.o
+		  erow.o editing.o config.o algo.o
 
 editor: $(objects)
 	$(CC) -o editor $(objects)
@@ -20,11 +20,12 @@ stringbuf.o: stringbuf.c
 search.o: search.c config.h keys.h hlhelpers.h input.h 
 	$(CC) -c $(CFLAGS) search.c config.h keys.h hlhelpers.h input.h
 
-render.o: render.c config.h stringbuf.h hlhelpers.h hl.h settings.h
-	$(CC) -c $(CFLAGS) render.c config.h stringbuf.h hlhelpers.h hl.h settings.h
+render.o: render.c config.h stringbuf.h hlhelpers.h hl.h settings.h algo.h
+	$(CC) -c $(CFLAGS) render.c config.h stringbuf.h hlhelpers.h hl.h settings.h algo.h
 
 io.o: io.c config.h hl.h terminal.h render.h input.h
 	$(CC) -c $(CFLAGS) io.c config.h hl.h terminal.h render.h input.h
+
 input.o: input.c render.h keys.h erow.h terminal.h config.h \
 	settings.h io.h editing.h search.h
 	$(CC) -c $(CFLAGS) input.c render.h keys.h erow.h terminal.h \
@@ -47,6 +48,9 @@ editing.o: editing.c config.h
 
 config.o: config.c terminal.h
 	$(CC) -c $(CFLAGS) config.c terminal.h
+
+algo.o: algo.c
+	$(CC) -c $(CFLAGS) algo.c
 
 .PHONY : clean
 clean:

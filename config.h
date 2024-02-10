@@ -16,6 +16,7 @@ struct config {
     int32_t screenrows;
     int32_t screencols;
     int32_t rowsnum;
+    int32_t max_linenum;
     erow *row;                          //file rows
     int32_t dirty;
     char *filename; 

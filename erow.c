@@ -19,7 +19,7 @@ int32_t convertCxToRx(erow* row, const int32_t cx)
         rx++;
     }
 
-    return rx;
+    return rx + 3;
 }
 
 int32_t convertRxToCx(erow *row, const int32_t rx)

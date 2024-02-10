@@ -61,11 +61,11 @@ void moveCursor(const int32_t key)
 
     switch (key)    {
         case ARROW_LEFT:
-            if (E.cx != 3)  {
+            if (E.cx != 0)  {
                 E.cx--;
             } else if (E.cy > 0)    {
                 E.cy--;
-                E.cx = E.row[E.cy].size + 3;
+                E.cx = E.row[E.cy].size;
             }
             break;
 
@@ -92,7 +92,7 @@ void moveCursor(const int32_t key)
     }
 
     row = (E.cy >= E.rowsnum) ? NULL : &E.row[E.cy];
-    const int32_t rowlen = row ? row->size + 3 : 3;
+    const int32_t rowlen = row ? row->size: 3;
     if (E.cx > rowlen + 3)  {
         E.cx = rowlen + 3;
     } 
@@ -129,7 +129,7 @@ void processKeypress(void)
 
         case END_KEY:
             if (E.cy < E.rowsnum)   {
-                E.cx = E.row[E.cy].size + 3;
+                E.cx = E.row[E.cy].size;
             }
             break;
 

@@ -13,7 +13,7 @@
 #include "hlhelpers.h"
 #include "hl.h"
 #include "settings.h"
-#include "terminal.h"
+#include "algo.h" //for getNumberLength()
 
 void scroll()   
 {
@@ -41,7 +41,7 @@ void scroll()
 
 void renderRows(struct stringbuf *buf)
 {
-   int32_t y, linenum = 1;
+   int32_t y;
    for (y = 0; y < E.screenrows; ++y)  {
         const int32_t filerow = y + E.rowoff;
         
@@ -73,12 +73,10 @@ void renderRows(struct stringbuf *buf)
                     stringbufAppend(buf, msg, msglen);
                 }
             } else {
+                //TODO: add special flags like BACKGROUND_STRING in stringbufAppend proc.
+
                 stringbufAppend(buf, "\x1b[48;5;236m", 11);
-                stringbufAppend(buf, " ", 1);
-                stringbufAppend(buf, "\x1b[48;5;236m", 11); //TODO: add special flags like BACKGROUND_STRING in stringbufAppend proc.
-                stringbufAppend(buf, "~", 1); //TODO: add current line highlighting
-                stringbufAppend(buf, "\x1b[48;5;236m", 11);
-                stringbufAppend(buf, " ", 1);
+                stringbufAppend(buf, " ~ ", 3);
                 stringbufAppend(buf, HL_RESET, 5);
                 stringbufAppend(buf, "\x1b[", 2);
                 stringbufAppend(buf, HL_BACKGROUND, 9);
@@ -94,14 +92,27 @@ void renderRows(struct stringbuf *buf)
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
             stringbufAppend(buf, " ", 1);
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
-            
             char numbuf[16];
-            int32_t numlen = snprintf(numbuf, sizeof(numbuf), "%d", linenum++);
-            stringbufAppend(buf, numbuf, numlen);
+            int32_t numbuf_written = snprintf(numbuf, sizeof(numbuf), "%d", filerow + 1);
+            stringbufAppend(buf, numbuf, numbuf_written);
+            //set number line size
+
+            /*char numbuf[16], spacebuf[16];
+            if (filerow + 1 > E.max_linenum) E.max_linenum = filerow + 1;
+            
+            const int8_t maxline_numlen = getNumberLength(E.max_linenum);
+            const int8_t actuline_numlen = getNumberLength(filerow + 1);
+
+            memset(spacebuf, ' ', maxline_numlen - actuline_numlen);
+            int32_t numline_written = snprintf(numbuf, actuline_numlen, "%d", filerow + 1);
             
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
+            stringbufAppend(buf, spacebuf, maxline_numlen - actuline_numlen);
+            stringbufAppend(buf, numbuf, numline_written);
+            */
+            stringbufAppend(buf, "\x1b[48;5;236m", 11);
             stringbufAppend(buf, " ", 1);
-
+            
             if (len == 0)   {
                 stringbufAppend(buf, "\x1b[", 2);
                 stringbufAppend(buf, HL_BACKGROUND, 9);
