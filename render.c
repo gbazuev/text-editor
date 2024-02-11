@@ -56,12 +56,8 @@ void renderRows(struct stringbuf *buf)
                 int32_t padding = (E.screencols - msglen) / 2;
 
                 if (padding)    { 
-                    stringbufAppend(buf, "\x1b[48;5;236m", 11); //
-                    stringbufAppend(buf, " ", 1);               //
-                    stringbufAppend(buf, "\x1b[48;5;236m", 11); //
-                    stringbufAppend(buf, "~", 1);               // split this into stringbuf function (flags or something else)
-                    stringbufAppend(buf, "\x1b[48;5;236m", 11); //
-                    stringbufAppend(buf, " ", 1);               //
+                    stringbufAppend(buf, "\x1b[48;5;236m", 11);
+                    stringbufAppend(buf, " ~ ", 3);
                     --padding;
 
                     while (padding--)  {
@@ -93,23 +89,27 @@ void renderRows(struct stringbuf *buf)
             stringbufAppend(buf, " ", 1);
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
             char numbuf[16];
-            int32_t numbuf_written = snprintf(numbuf, sizeof(numbuf), "%d", filerow + 1);
-            stringbufAppend(buf, numbuf, numbuf_written);
+            //int32_t numbuf_written = snprintf(numbuf, sizeof(numbuf), "%d", filerow + 1);
+            //stringbufAppend(buf, numbuf, numbuf_written);
             //set number line size
 
-            /*char numbuf[16], spacebuf[16];
             if (filerow + 1 > E.max_linenum) E.max_linenum = filerow + 1;
             
             const int8_t maxline_numlen = getNumberLength(E.max_linenum);
             const int8_t actuline_numlen = getNumberLength(filerow + 1);
+            
+            char spacebuf[maxline_numlen - actuline_numlen + 1];
+            
+            // \x1b[48;5;236m 48
 
             memset(spacebuf, ' ', maxline_numlen - actuline_numlen);
+            spacebuf[maxline_numlen - actuline_numlen + 1] = '\0';
             int32_t numline_written = snprintf(numbuf, actuline_numlen, "%d", filerow + 1);
             
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
-            stringbufAppend(buf, spacebuf, maxline_numlen - actuline_numlen);
+            stringbufAppend(buf, spacebuf, strlen(spacebuf));
             stringbufAppend(buf, numbuf, numline_written);
-            */
+        
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
             stringbufAppend(buf, " ", 1);
             
