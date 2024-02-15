@@ -102,8 +102,7 @@ void renderRows(struct stringbuf *buf)
             
             // \x1b[48;5;236m 48
 
-            memset(spacebuf, ' ', maxline_numlen - actuline_numlen);
-            spacebuf[maxline_numlen - actuline_numlen + 1] = '\0';
+            memset(spacebuf, ' ', maxline_numlen - actuline_numlen + 1);
             int32_t numline_written = snprintf(numbuf, actuline_numlen, "%d", filerow + 1);
             
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
