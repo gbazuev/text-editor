@@ -40,8 +40,8 @@ hldb.o: hldb.c hlfiletypes.h hlhelpers.h esyntax.h
 hl.o: hl.c erow.h hlhelpers.h hldb.h esyntax.h config.h
 	$(CC) -c $(CFLAGS) hl.c erow.h hlhelpers.h hldb.h esyntax.h config.h
 
-erow.o: erow.c hl.h settings.h config.h
-	$(CC) -c $(CFLAGS) erow.c hl.h settings.h config.h
+erow.o: erow.c hl.h settings.h config.h algo.h
+	$(CC) -c $(CFLAGS) erow.c hl.h settings.h config.h algo.h
 
 editing.o: editing.c config.h
 	$(CC) -c $(CFLAGS) editing.c config.h

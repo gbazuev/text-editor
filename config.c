@@ -22,7 +22,7 @@ void init(void)
     E.statusmsg[0] = '\0';
     E.statusmsg_time = 0;
     E.syntax = NULL;
-    E.max_linenum = 1;
+    E.max_linenum = 0;
 
     if (getWindowSize(&E.screenrows, &E.screencols) == -1)  {
         die("getWindowSize");

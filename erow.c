@@ -8,6 +8,7 @@
 #include "hl.h"
 #include "settings.h"
 #include "config.h"
+#include "algo.h"
 
 int32_t convertCxToRx(erow* row, const int32_t cx)
 {
@@ -19,7 +20,7 @@ int32_t convertCxToRx(erow* row, const int32_t cx)
         rx++;
     }
 
-    return rx + 3;
+    return rx + 2 + getNumberLength(E.max_linenum);
 }
 
 int32_t convertRxToCx(erow *row, const int32_t rx)
@@ -84,6 +85,7 @@ void insertRow(const int32_t index, const char *s, const size_t len)
     updateRow(&E.row[index]);
 
     E.rowsnum++;
+    E.max_linenum++;
     E.dirty++;
 }
 
@@ -101,7 +103,8 @@ void deleteRow(const int32_t index)
     memmove(&E.row[index], &E.row[index + 1], sizeof(erow) * (E.rowsnum - index - 1));
     
     for (int32_t j = index; j < E.rowsnum - 1; ++j) E.row[j].idx--;
-
+    
+    E.max_linenum--;
     E.rowsnum--;
     E.dirty++;
 }

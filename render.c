@@ -45,6 +45,9 @@ void renderRows(struct stringbuf *buf)
    for (y = 0; y < E.screenrows; ++y)  {
         const int32_t filerow = y + E.rowoff;
         
+        const int8_t maxline_numlen = getNumberLength(E.max_linenum);
+        const int8_t actuline_numlen = getNumberLength(filerow + 1);
+
         if (filerow >= E.rowsnum) {
             if (E.rowsnum == 0 && y == E.screenrows / 3)   {
                 char msg[80];
@@ -84,19 +87,14 @@ void renderRows(struct stringbuf *buf)
             char *c = &E.row[filerow].render[E.coloff]; //TODO: this should be put into a separate procedure
             char *highlight = &E.row[filerow].highlight[E.coloff];
             int32_t current_color = -1;
-            
+    
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
             stringbufAppend(buf, " ", 1);
             char numbuf[16];
             //int32_t numbuf_written = snprintf(numbuf, sizeof(numbuf), "%d", filerow + 1);
             //stringbufAppend(buf, numbuf, numbuf_written);
             //set number line size
-
-            if ((filerow + 1) > E.max_linenum) E.max_linenum = filerow + 1;
-            
-            const int8_t maxline_numlen = getNumberLength(E.max_linenum);
-            const int8_t actuline_numlen = getNumberLength(filerow + 1);
-             
+        
             char spacebuf[maxline_numlen - actuline_numlen + 1];
             memset(spacebuf, ' ', maxline_numlen - actuline_numlen);
         
