@@ -87,29 +87,23 @@ void renderRows(struct stringbuf *buf)
             
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
             stringbufAppend(buf, " ", 1);
-            stringbufAppend(buf, "\x1b[48;5;236m", 11);
             char numbuf[16];
             //int32_t numbuf_written = snprintf(numbuf, sizeof(numbuf), "%d", filerow + 1);
             //stringbufAppend(buf, numbuf, numbuf_written);
             //set number line size
 
-            if (filerow + 1 > E.max_linenum) E.max_linenum = filerow + 1;
+            if ((filerow + 1) > E.max_linenum) E.max_linenum = filerow + 1;
             
             const int8_t maxline_numlen = getNumberLength(E.max_linenum);
             const int8_t actuline_numlen = getNumberLength(filerow + 1);
-            
+             
             char spacebuf[maxline_numlen - actuline_numlen + 1];
-            
-            // \x1b[48;5;236m 48
-
-            memset(spacebuf, ' ', maxline_numlen - actuline_numlen + 1);
-            int32_t numline_written = snprintf(numbuf, actuline_numlen, "%d", filerow + 1);
-            
-            stringbufAppend(buf, "\x1b[48;5;236m", 11);
-            stringbufAppend(buf, spacebuf, strlen(spacebuf));
-            stringbufAppend(buf, numbuf, numline_written);
+            memset(spacebuf, ' ', maxline_numlen - actuline_numlen);
         
-            stringbufAppend(buf, "\x1b[48;5;236m", 11);
+            stringbufAppend(buf, spacebuf, maxline_numlen - actuline_numlen);
+            int32_t numline_written = snprintf(numbuf, actuline_numlen + 1, "%d", filerow + 1);
+            stringbufAppend(buf, numbuf, numline_written);
+
             stringbufAppend(buf, " ", 1);
             
             if (len == 0)   {
