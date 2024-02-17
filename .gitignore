@@ -6,3 +6,5 @@ text-editor/editor.c
 **.h.gch
 t.c
 **.o
+help.c
+help.o

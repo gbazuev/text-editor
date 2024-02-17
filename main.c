@@ -21,6 +21,6 @@ int main(int argc, const char *argv[])
         refreshScreen();
         processKeypress();
     }
-
+    
     return EXIT_SUCCESS;
 }

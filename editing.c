@@ -1,6 +1,7 @@
 #include "editing.h"
 
 #include "config.h"
+#include "erow.h"
 
 void insertChar(const int8_t character)
 {
