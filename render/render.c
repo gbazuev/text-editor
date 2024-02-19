@@ -91,9 +91,6 @@ void renderRows(struct stringbuf *buf)
             stringbufAppend(buf, "\x1b[48;5;236m", 11);
             stringbufAppend(buf, " ", 1);
             char numbuf[16];
-            //int32_t numbuf_written = snprintf(numbuf, sizeof(numbuf), "%d", filerow + 1);
-            //stringbufAppend(buf, numbuf, numbuf_written);
-            //set number line size
         
             char spacebuf[maxline_numlen - actuline_numlen + 1];
             memset(spacebuf, ' ', maxline_numlen - actuline_numlen);
@@ -113,8 +110,7 @@ void renderRows(struct stringbuf *buf)
             for (int32_t j = 0; j < len; ++j)   {
                 if (iscntrl(c[j]))  {
                     const char symbol = (c[j] <= 26) ? '@' + c[j] : '?';
-                    stringbufAppend(buf, "\x1b[7m", 4); //TODO: highlighting!!!
-                    //stringbufAppend(buf, HL_BACKGROUND, 9);
+                    stringbufAppend(buf, "\x1b[7m", 4);
                     stringbufAppend(buf, &symbol, 1);
                     if (current_color != -1) {
                         char cbuf[16];
