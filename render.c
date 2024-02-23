@@ -172,12 +172,20 @@ void renderStatusBar(struct stringbuf *buf)
 
 void renderMessageBar(struct stringbuf *buf)
 {
-    stringbufAppend(buf, "\x1b[K", 3);
+    stringbufAppend(buf, "\x1b[K\x1b[", 5);
+    stringbufAppend(buf, HL_BACKGROUND, 9);
     int32_t msglen = strlen(E.statusmsg);
     if (msglen > E.screencols) msglen = E.screencols;
     if (msglen && time(NULL) - E.statusmsg_time < 5)   {
         stringbufAppend(buf, E.statusmsg, msglen);
     }
+
+    while (msglen < E.screencols)   {
+        stringbufAppend(buf, " ", 1);
+        msglen++;
+    }
+
+    stringbufAppend(buf, "\x1b[m", 3);
 }
 
 void refreshScreen(void)

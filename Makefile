@@ -1,12 +1,17 @@
-CC=gcc	
-CFLAGS=-Wall -Wextra -pedantic -std=c2x
+.PHONY: clean
+
+CC = gcc	
+CFLAGS = -Wall -Wextra -pedantic -std=c2x
+EXECUTABLE := editor
 
 objects = main.o terminal.o stringbuf.o search.o render.o \
 		  io.o input.o hlfiletypes.o hldb.o hl.o \
 		  erow.o editing.o config.o algo.o
 
-editor: $(objects)
-	$(CC) -o editor $(objects)
+$(EXECUTABLE): $(objects)
+	$(CC) -o $(EXECUTABLE) $(objects)
+	rm *.o
+	rm *.h.gch
 
 main.o: main.c input.h render.h terminal.h config.h io.h
 	$(CC) -c $(CFLAGS) main.c input.h render.h terminal.h config.h io.h
@@ -52,6 +57,5 @@ config.o: config.c terminal.h
 algo.o: algo.c
 	$(CC) -c $(CFLAGS) algo.c
 
-.PHONY : clean
 clean:
-	rm editor $(objects)
+	rm $(EXECUTABLE)
