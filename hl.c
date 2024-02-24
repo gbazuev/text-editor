@@ -108,11 +108,12 @@ void updateSyntax(erow *row)
             for (; keywords[j]; ++j)  {
                 int32_t keyword_len = strlen(keywords[j]);
                 const int32_t is_keyword2 = keywords[j][keyword_len - 1] == '|';
+                const int32_t is_keyword3 = keywords[j][0] == '#';
 
                 if (is_keyword2) keyword_len--;
 
                 if (!strncmp(&row->render[i], keywords[j], keyword_len) && is_separator(row->render[i + keyword_len]))  {
-                    memset(&row->highlight[i], is_keyword2 ? HL_KEYWORD2 : HL_KEYWORD1, keyword_len);
+                    memset(&row->highlight[i], is_keyword2 ? HL_KEYWORD2 : is_keyword3 ? HL_KEYWORD3 : HL_KEYWORD1, keyword_len);
                     i += keyword_len;
                     break;
                 }
@@ -141,7 +142,8 @@ int32_t mapSyntaxToColor(const int32_t highlight)
         case HL_MLCOMMENT: return 244;
         case HL_KEYWORD1: return 208;
         case HL_KEYWORD2: return 208;
-        case HL_NUMBER: return 99; //TODO: 8-bit colors!!!
+        case HL_KEYWORD3: return 142;
+        case HL_NUMBER: return 99;
         case HL_MATCH: return 196;
         case HL_STRING: return 106;
         default: return 196;

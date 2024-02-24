@@ -6,5 +6,6 @@ char *C_KEYWORDS[] = {
     "else", "struct", "union", "typedef", "enum", "class", "case", 
     "const|", "constexpr|", "consteval|", "constinit|", "concept|",
     "template|", "requires", "asm", "int|", "char|", "short|",
-    "long|", "float|", "double|", "unsigned|", "signed|", (void*) 0
+    "long|", "float|", "double|", "unsigned|", "signed|", "#include",
+    "#define", "#ifdef", "#ifndef", "#error", "#undef", (void*)0
 }; 

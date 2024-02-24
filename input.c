@@ -110,7 +110,7 @@ void processKeypress(void)
 
         case CTRL_KEY('q'):
             if (E.dirty && quit_times > 0)  {
-                setStatusMessage("WARNING! File has unsaved changes.\nPress CTRL-Q %d more time to quit.", quit_times);
+                setStatusMessage("WARNING! File has unsaved changes. Press CTRL-Q %d more time to quit.", quit_times);
                 quit_times--;
                 return;
             }
