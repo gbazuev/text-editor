@@ -1,15 +1,17 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "stringbuf.h"
+#include "renderbuf.h"
 
 void scroll(void);
 
-void renderRows(struct stringbuf *buf);
+void renderCurrentRow(struct renderbuf *buf);
 
-void renderStatusBar(struct stringbuf *buf);
+//void renderRows(struct renderbuf *buf); TODO
 
-void renderMessageBar(struct stringbuf *buf);
+void renderStatusBar(struct renderbuf *buf);
+
+void renderMessageBar(struct renderbuf *buf);
 
 void refreshScreen(void);
 

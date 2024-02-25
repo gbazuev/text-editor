@@ -1,10 +1,10 @@
-#include "stringbuf.h"
+#include "renderbuf.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
-void stringbufAppend(struct stringbuf *buf, const char *s, const uint32_t len)   
+void renderbufAppend(struct renderbuf *buf, const char *s, const uint32_t len)   
 {
     char* new = realloc(buf->str, buf->len + len);
 
@@ -14,7 +14,7 @@ void stringbufAppend(struct stringbuf *buf, const char *s, const uint32_t len)
     buf->len += len;
 }
 
-void stringbufFree(struct stringbuf *buf) 
+void renderbufFree(struct renderbuf *buf) 
 {
     free(buf->str);
 }

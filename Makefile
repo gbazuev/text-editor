@@ -4,7 +4,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c2x
 EXECUTABLE := editor
 
-objects = main.o terminal.o stringbuf.o search.o render.o \
+objects = main.o terminal.o renderbuf.o search.o render.o \
 		  io.o input.o hlfiletypes.o hldb.o hl.o \
 		  erow.o editing.o config.o algo.o
 
@@ -19,14 +19,14 @@ main.o: main.c input.h render.h terminal.h config.h io.h
 terminal.o: terminal.c keys.h config.h
 	$(CC) -c $(CFLAGS) terminal.c
 
-stringbuf.o: stringbuf.c
-	$(CC) -c $(CFLAGS) stringbuf.c
+renderbuf.o: renderbuf.c
+	$(CC) -c $(CFLAGS) renderbuf.c
 
 search.o: search.c config.h keys.h hlhelpers.h input.h 
 	$(CC) -c $(CFLAGS) search.c config.h keys.h hlhelpers.h input.h
 
-render.o: render.c config.h stringbuf.h hlhelpers.h hl.h settings.h algo.h
-	$(CC) -c $(CFLAGS) render.c config.h stringbuf.h hlhelpers.h hl.h settings.h algo.h
+render.o: render.c config.h renderbuf.h hlhelpers.h hl.h settings.h algo.h
+	$(CC) -c $(CFLAGS) render.c config.h renderbuf.h hlhelpers.h hl.h settings.h algo.h
 
 io.o: io.c config.h hl.h terminal.h render.h input.h
 	$(CC) -c $(CFLAGS) io.c config.h hl.h terminal.h render.h input.h
