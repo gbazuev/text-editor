@@ -185,6 +185,7 @@ void renderMessageBar(struct renderbuf *buf)
 
 void refreshScreen(void)
 {
+    //getWindowSize(&E.screenrows, &E.screencols);
     scroll();
     struct renderbuf rbuf = RENDERBUF_INIT;
 
