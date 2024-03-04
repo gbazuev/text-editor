@@ -1,24 +1,17 @@
-.PHONY: all clean
+.PHONY: clean
 
 CC = gcc	
 CFLAGS = -Wall -Wextra -pedantic -std=c2x
 EXECUTABLE := editor
-WORKDIR := src
 
 objects = main.o terminal.o renderbuf.o search.o render.o \
 		  io.o input.o hlfiletypes.o hldb.o hl.o \
 		  erow.o editing.o config.o algo.o
 
-all: pre-build $(EXECUTABLE)
-
-pre-build:
-	cd $(WORKDIR)
-
 $(EXECUTABLE): $(objects) 
 	$(CC) -o $(EXECUTABLE) $(objects)
 	rm *.o
 	rm *.h.gch
-	mv $(EXECUTABLE) ..
 
 main.o: main.c input.h render.h terminal.h config.h io.h
 	$(CC) -c $(CFLAGS) main.c input.h render.h terminal.h config.h io.h
