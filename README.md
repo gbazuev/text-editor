@@ -1,5 +1,3 @@
-CURRENTLY NO COMPILES (Problems with Make buildsystem)
-
 This is a simple text editor running in the terminal. The project is based on a series of [Build Your Own Text Editor](https://viewsourcecode.org/snaptoken/kilo/) articles, which, in turn, are based on the [antirez's Kilo](http://antirez.com/news/108) project!
 
 To build the editor, you need to do
