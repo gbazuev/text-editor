@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void renderbufAppend(struct renderbuf *buf, const char *s, const uint32_t len)   
+void renderbufAppend(struct renderbuf *buf, char const *s, uint32_t const len)   
 {
     char* new = realloc(buf->str, buf->len + len);
 

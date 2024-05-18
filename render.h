@@ -15,6 +15,6 @@ void renderMessageBar(struct renderbuf *buf);
 
 void refreshScreen(void);
 
-void setStatusMessage(const char *fmt, ...);
+void setStatusMessage(char const *fmt, ...);
 
 #endif /* RENDER_H */

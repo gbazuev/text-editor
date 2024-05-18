@@ -14,22 +14,22 @@ typedef struct erow {
     int32_t hl_open_comment;
 } erow;
 
-int32_t convertCxToRx(erow *row, const int32_t cx);
+int32_t convertCxToRx(erow *row, int32_t const cx);
 
-int32_t convertRxToCx(erow *row, const int32_t rx);
+int32_t convertRxToCx(erow *row, int32_t const rx);
 
 void updateRow(erow *row);
 
-void insertRow(const int32_t index, const char *s, const size_t len);
+void insertRow(int32_t const index, char const *s, size_t const len);
 
 void freeRow(erow *row);
 
-void deleteRow(const int32_t index);
+void deleteRow(int32_t const index);
 
-void insertCharInRow(erow *row, int32_t index, const int32_t ch);
+void insertCharInRow(erow *row, int32_t index, int32_t const ch);
 
-void appendStringInRow(erow *row, const char* str, const size_t len);
+void appendStringInRow(erow *row, char const *str, size_t const len);
 
-void deleteCharFromRow(erow *row, const int32_t index);
+void deleteCharFromRow(erow *row, int32_t const index);
 
 #endif /* EROW_H */

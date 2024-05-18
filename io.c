@@ -34,7 +34,7 @@ char *convertRowsToSingleString(int32_t *buflen)
     return buf;
 }
 
-void openFile(const char *filename)
+void openFile(char const *filename)
 {   
     free(E.filename);
     E.filename = strdup(filename);
@@ -75,7 +75,7 @@ void saveFile()
     int len;
     char *buf = convertRowsToSingleString(&len);
 
-    const int fd = open(E.filename, O_RDWR | O_CREAT, 0644);
+    int32_t const fd = open(E.filename, O_RDWR | O_CREAT, 0644);
     if (fd != -1)   {
         if (ftruncate(fd, len) != -1)   {
            if (write(fd, buf, len) == len)  {

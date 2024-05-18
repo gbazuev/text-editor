@@ -16,7 +16,7 @@
 #include "editing.h"
 #include "search.h"
 
-char *prompt(char *prompt, void (*callback)(const char*, const int32_t))
+char *prompt(char *prompt, void (*callback)(char const *, int32_t const))
 {
     size_t bufcapacity = 128;
     char *buf = malloc(bufcapacity);
@@ -55,7 +55,7 @@ char *prompt(char *prompt, void (*callback)(const char*, const int32_t))
     }
 }
 
-void moveCursor(const int32_t key)
+void moveCursor(int32_t const key)
 {
     erow *row = (E.cy >= E.rowsnum) ? NULL : &E.row[E.cy]; 
 
@@ -92,7 +92,7 @@ void moveCursor(const int32_t key)
     }
 
     row = (E.cy >= E.rowsnum) ? NULL : &E.row[E.cy];
-    const int32_t rowlen = row ? row->size : 0;
+    int32_t const rowlen = row ? row->size : 0;
     if (E.cx > rowlen)  {
         E.cx = rowlen;
     } 
@@ -101,7 +101,7 @@ void moveCursor(const int32_t key)
 void processKeypress(void)
 {
     static int32_t quit_times = EDITOR_QUIT_TIMES;
-    const int32_t c = readKey();
+    int32_t const c = readKey();
 
     switch (c)  {
         case '\r':

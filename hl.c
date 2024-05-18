@@ -25,19 +25,19 @@ void updateSyntax(erow *row)
     
     char **keywords = E.syntax->keywords;
 
-    const char *scs = E.syntax->singleline_comment_start;
-    const char *mcs = E.syntax->multiline_comment_start;
-    const char *mce = E.syntax->multiline_comment_end;
+    char const *scs = E.syntax->singleline_comment_start;
+    char const *mcs = E.syntax->multiline_comment_start;
+    char const *mce = E.syntax->multiline_comment_end;
 
-    const uint32_t scs_len = scs ? strlen(scs) : 0;
-    const uint32_t mcs_len = mcs ? strlen(mcs) : 0;
-    const uint32_t mce_len = mce ? strlen(mcs) : 0;
+    uint32_t const scs_len = scs ? strlen(scs) : 0;
+    uint32_t const mcs_len = mcs ? strlen(mcs) : 0;
+    uint32_t const mce_len = mce ? strlen(mcs) : 0;
 
     int32_t prev_separator = 1, in_string = 0, in_comment = (row->idx > 0 && E.row[row->idx - 1].hl_open_comment);
     int32_t i = 0;
 
     while (i < row->rendersize) {
-        const char symbol = row->render[i];
+        char const symbol = row->render[i];
         unsigned char prev_highlight = (i > 0) ? row->highlight[i - 1] : HL_NORMAL;
 
         if (scs_len && !in_string && !in_comment)  {
@@ -107,8 +107,8 @@ void updateSyntax(erow *row)
 
             for (; keywords[j]; ++j)  {
                 int32_t keyword_len = strlen(keywords[j]);
-                const int32_t is_keyword2 = keywords[j][keyword_len - 1] == '|';
-                const int32_t is_keyword3 = keywords[j][0] == '#';
+                int32_t const is_keyword2 = keywords[j][keyword_len - 1] == '|';
+                int32_t const is_keyword3 = keywords[j][0] == '#';
 
                 if (is_keyword2) keyword_len--;
 

@@ -5,7 +5,7 @@
 
 char *convertRowsToSingleString(int32_t *buflen);
 
-void openFile(const char *filename);
+void openFile(char const *filename);
 
 void saveFile(void);
 

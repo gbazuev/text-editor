@@ -9,7 +9,7 @@
 #include "hlhelpers.h"
 #include "input.h"
 
-void searchCallback(const char *query, const int32_t key)
+void searchCallback(char const *query, int32_t const key)
 {
     static int32_t last_match = -1;
     static int32_t direction = 1;

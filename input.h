@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
-char *prompt(char *prompt, void (*callback)(const char*, const int32_t));
+char *prompt(char *prompt, void (*callback)(char const *, int32_t const));
 
-void moveCursor(const int32_t key);
+void moveCursor(int32_t const key);
 
 void processKeypress(void);
 

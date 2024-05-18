@@ -10,7 +10,7 @@
 #include "keys.h"
 #include "config.h"
 
-void die(const char *s)
+void die(char const *s)
 {
     write(STDOUT_FILENO, "\x1b[2J", 4);
     write(STDOUT_FILENO, "\x1b[H", 3);

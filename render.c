@@ -43,10 +43,10 @@ void renderRows(struct renderbuf *buf)
 {
    int32_t y;
    for (y = 0; y < E.screenrows; ++y)  {
-        const int32_t filerow = y + E.rowoff;
+        int32_t const filerow = y + E.rowoff;
         
-        const int8_t maxline_numlen = getNumberLength(E.max_linenum);
-        const int8_t actuline_numlen = getNumberLength(filerow + 1);
+        int8_t const maxline_numlen = getNumberLength(E.max_linenum);
+        int8_t const actuline_numlen = getNumberLength(filerow + 1);
 
         if (filerow >= E.rowsnum) {
             if (E.rowsnum == 0 && y == E.screenrows / 3)   {
@@ -106,7 +106,7 @@ void renderRows(struct renderbuf *buf)
 
             for (int32_t j = 0; j < len; ++j)   {
                 if (iscntrl(c[j]))  {
-                    const char symbol = (c[j] <= 26) ? '@' + c[j] : '?';
+                    char const symbol = (c[j] <= 26) ? '@' + c[j] : '?';
                     renderbufAppend(buf, "\x1b[7m", 4);
                     renderbufAppend(buf, &symbol, 1);
                     if (current_color != -1) {
@@ -205,7 +205,7 @@ void refreshScreen(void)
     renderbufFree(&rbuf);
 }
 
-void setStatusMessage(const char *fmt, ...)
+void setStatusMessage(char const *fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);

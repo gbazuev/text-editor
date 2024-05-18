@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-void searchCallback(const char *query, const int32_t key);
+void searchCallback(char const *query, int32_t const key);
 
 void search();
 

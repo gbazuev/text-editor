@@ -6,7 +6,7 @@
 #include "config.h"
 #include "io.h"
 
-int main(int argc, const char *argv[])
+int main(int argc, char const *argv[])
 {
     enableRawMode();
     init();

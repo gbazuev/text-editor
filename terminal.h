@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-void die(const char *s);
+void die(char const *s);
 
 void disableRawMode(void);
 

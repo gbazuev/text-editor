@@ -10,7 +10,7 @@
 #include "config.h"
 #include "algo.h"
 
-int32_t convertCxToRx(erow* row, const int32_t cx)
+int32_t convertCxToRx(erow *row, int32_t const cx)
 {
     int32_t rx = 0;
     for (int32_t j = 0; j < cx; ++j)    {
@@ -23,7 +23,7 @@ int32_t convertCxToRx(erow* row, const int32_t cx)
     return rx + 2 + getNumberLength(E.max_linenum);
 }
 
-int32_t convertRxToCx(erow *row, const int32_t rx)
+int32_t convertRxToCx(erow *row, int32_t const rx)
 {
     int32_t current_rx = 0, cx;
     for (cx = 0; cx < row->size; ++cx)  {
@@ -62,7 +62,7 @@ void updateRow(erow *row)
     updateSyntax(row);
 }
 
-void insertRow(const int32_t index, const char *s, const size_t len) 
+void insertRow(int32_t const index, char const *s, size_t const len) 
 {
     if (index < 0 || index > E.rowsnum) return;
 
@@ -96,7 +96,7 @@ void freeRow(erow *row)
     free(row->highlight);
 }
 
-void deleteRow(const int32_t index)
+void deleteRow(int32_t const index)
 {
     if (index < 0 || index >= E.rowsnum)  return;
     freeRow(&E.row[index]);
@@ -109,7 +109,7 @@ void deleteRow(const int32_t index)
     E.dirty++;
 }
 
-void insertCharInRow(erow *row, int32_t index, const int32_t ch)
+void insertCharInRow(erow *row, int32_t index, int32_t const ch)
 {
     if (index < 0 || index > row->size) index = row->size;
     row->chars = realloc(row->chars, row->size + 2);
@@ -120,7 +120,7 @@ void insertCharInRow(erow *row, int32_t index, const int32_t ch)
     E.dirty++;
 }
 
-void appendStringInRow(erow *row, const char *str, const size_t len)
+void appendStringInRow(erow *row, char const *str, size_t const len)
 {
     row->chars = realloc(row->chars, row->size + len + 1);
     memcpy(&row->chars[row->size], str, len);
@@ -130,7 +130,7 @@ void appendStringInRow(erow *row, const char *str, const size_t len)
     E.dirty++;
 }
 
-void deleteCharFromRow(erow *row, const int32_t index)
+void deleteCharFromRow(erow *row, int32_t const index)
 {
     if (index < 0 || index >= row->size) return;
     memmove(&row->chars[index], &row->chars[index + 1], row->size - index);
