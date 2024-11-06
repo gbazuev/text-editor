@@ -1,12 +1,14 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include "io.h"
 
-#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stdio.h>
 
 #include "config.h"
 #include "hl.h"
